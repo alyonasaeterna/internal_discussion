@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alyona Group - Investment Model A1</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafbfc;
+      --surface: #ffffff;
+      --accent1: #2d5a8c;
+      --accent2: #c9714d;
+      --accent3: #52a96b;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+    }
+    h1, h2, h3 { font-family: 'Merriweather', serif; font-weight: 700; }
+    
+    .app-wrapper {
+      width: 100%;
+      background: var(--bg);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--surface) 0%, #f3f7ff 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1.5rem;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      margin: 0 0 0.3rem 0;
+      color: var(--text);
+    }
+    .header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    
+    .content-area {
+      padding: 2rem 1.5rem;
+    }
+    
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+      gap: 1.5rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card.full { grid-column: 1 / -1; }
+    .card h3 {
+      font-size: 1.1rem;
+      margin: 0 0 1rem 0;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: linear-gradient(135deg, rgba(45,90,140,0.08), rgba(201,113,77,0.08));
+      color: var(--accent1);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 0.7rem 0.75rem;
+      border-bottom: 1px solid #f0f0f0;
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) { background: #fafbfc; }
+    tr.highlight { background: rgba(82,169,107,0.06) !important; }
+    tr.highlight td { font-weight: 600; color: var(--accent3); }
+    
+    .flow-chart {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      background: var(--surface);
+      border: 2px solid var(--accent1);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent1);
+      flex: 1;
+      min-width: 100px;
+    }
+    .flow-arrow {
+      color: var(--accent2);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    .tree {
+      background: #f9fafb;
+      border-left: 3px solid var(--accent1);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .tree-node {
+      margin-bottom: 0.8rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border);
+      padding-left: 1rem;
+    }
+    .tree-node strong { color: var(--accent1); }
+    .tree-node small { color: var(--muted); display: block; margin-top: 0.2rem; }
+    
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(82,169,107,0.08), rgba(82,169,107,0.04));
+      border-left: 4px solid var(--accent3);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    .investor-journey {
+      background: linear-gradient(135deg, #f3f7ff 0%, #f9fafb 100%);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .journey-stat {
+      display: inline-block;
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      margin: 0.5rem;
+      border: 2px solid var(--border);
+    }
+    .journey-stat .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent3);
+      font-family: 'Courier New', monospace;
+    }
+    .journey-stat .label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .comparison-grid > div {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .comparison-grid h4 {
+      margin: 0 0 0.5rem 0;
+      color: var(--accent1);
+      font-size: 0.95rem;
+    }
+    .comparison-grid ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+    .comparison-grid li { margin-bottom: 0.4rem; }
+    .comparison-grid .can { color: var(--accent3); }
+    .comparison-grid .cannot { color: #d1634b; }
+    
+    .faq-item {
+      background: var(--surface);
+      border-left: 4px solid var(--accent2);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    .faq-item strong { color: var(--accent1); }
+    .faq-item p { margin: 0.5rem 0 0 0; font-size: 0.9rem; }
+    
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <!-- Header -->
+   <div class="header">
+    <h1>🏢 <span id="company-name-header">Alyona Group</span></h1>
+    <p>Investment Model A1 — Growth-Based Group Investment Structure</p>
+   </div><!-- Content -->
+   <div class="content-area">
+    <div class="section-grid">
+     <!-- 1. Model Overview -->
+     <div class="card full">
+      <h3>📋 Model Overview</h3>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Model Name</strong></td>
+         <td>Alyona Group Growth Investment Model</td>
+         <td><strong>Structure Type</strong></td>
+         <td>Central Holding Company + Subsidiaries</td>
+        </tr>
+        <tr>
+         <td><strong>Founder Ownership</strong></td>
+         <td id="founder-pct-display">80% (Control)</td>
+         <td><strong>Investor Pool</strong></td>
+         <td id="investor-pct-display">20% (Passive)</td>
+        </tr>
+        <tr>
+         <td><strong>Return Model</strong></td>
+         <td>Growth + Dividends + Exit</td>
+         <td><strong>Key Benefit</strong></td>
+         <td>High upside, founders retain control</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 2. Model Flow -->
+     <div class="card full">
+      <h3>⚡ How It Works</h3>
+      <div class="flow-chart">
+       <div class="flow-box">
+        💰 Invest
+       </div>
+       <div class="flow-arrow">
+        →
+       </div>
+       <div class="flow-box">
+        📈 Group Grows
+       </div>
+       <div class="flow-arrow">
+        →
+       </div>
+       <div class="flow-box">
+        🚀 Value Grows
+       </div>
+       <div class="flow-arrow">
+        →
+       </div>
+       <div class="flow-box">
+        ✅ Earn Returns
+       </div>
+      </div>
+      <p style="margin: 0; font-size: 0.9rem; color: var(--muted);">Investors purchase equity stakes in Alyona Group Holdings. As the holding company and its subsidiaries grow, share values increase. Returns come through share appreciation, optional dividends, and exit opportunities.</p>
+     </div><!-- 3. Group Structure -->
+     <div class="card">
+      <h3>🏛️ Organizational Structure</h3>
+      <div class="tree">
+       <div style="text-align: center; margin-bottom: 1rem; font-weight: 600; color: var(--accent1);">
+        Alyona Group Holdings
+       </div>
+       <div class="tree-node">
+        <strong>👗 Alyona's Armoire</strong> <small style="color: var(--accent3);">[Proven &amp; Established]</small> <small>Kidswear Retail Business</small>
+       </div>
+       <div class="tree-node">
+        <strong>🚚 Alyona's Solvics</strong> <small style="color: #c9714d;">[Growth Stage / Developing]</small> <small>Freight Intelligence &amp; Remote Services</small>
+       </div>
+       <div class="tree-node">
+        <strong>🔄 Alyona's Reventra</strong> <small style="color: #f59e0b;">[In Progress / New Launch]</small> <small>Trading and Forwarding</small>
+       </div>
+       <div class="tree-node">
+        <strong>🌐 Alyona's Setu</strong> <small style="color: #8b5cf6;">[Upcoming]</small> <small>Future US Freight Forwarding</small>
+       </div>
+       <div class="tree-node">
+        <strong>💻 Alyona's Aeterna</strong> <small style="color: #8b5cf6;">[Upcoming]</small> <small>Future Software Development</small>
+       </div>
+      </div>
+     </div><!-- 4. Share Structure Example -->
+     <div class="card">
+      <h3>📊 Share Allocation Example</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Holder</th>
+         <th>Shares</th>
+         <th>Ownership</th>
+         <th>Value</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Founders</strong></td>
+         <td id="ex-founder-shares">40,000</td>
+         <td>80%</td>
+         <td id="ex-founder-value">₹40,00,000</td>
+        </tr>
+        <tr>
+         <td><strong>Investor Pool</strong></td>
+         <td id="ex-investor-shares">10,000</td>
+         <td>20%</td>
+         <td id="ex-investor-value">₹10,00,000</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>TOTAL</strong></td>
+         <td id="ex-total-shares">50,000</td>
+         <td>100%</td>
+         <td id="ex-total-value">₹50,00,000</td>
+        </tr>
+       </tbody>
+      </table>
+      <div class="highlight-box" style="margin-top: 1rem; margin-bottom: 0;">
+       <strong>Share Price:</strong> ₹<span id="ex-share-price">100</span> per share (Valuation ÷ Total Shares)
+      </div>
+     </div><!-- 5. Individual Investor Example -->
+     <div class="card">
+      <h3>👤 Individual Investor Entry (Example)</h3>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Investment Amount</strong></td>
+         <td>₹5,00,000</td>
+        </tr>
+        <tr>
+         <td><strong>Share Price</strong></td>
+         <td>₹100 per share</td>
+        </tr>
+        <tr>
+         <td><strong>Shares Received</strong></td>
+         <td>5,000 shares</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Ownership %</strong></td>
+         <td>10% of company</td>
+        </tr>
+        <tr>
+         <td><strong>Investor Benefits</strong></td>
+         <td>Share in growth, possible dividends, exit rights</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 6. Return Scenarios -->
+     <div class="card full">
+      <h3>📈 5-Year Investor Journey</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Year</th>
+         <th>Milestone</th>
+         <th>Company Value</th>
+         <th>Share Price</th>
+         <th>Investor Value (10%)</th>
+         <th>Return</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Year 0</strong></td>
+         <td>Investment Entry</td>
+         <td>₹50,00,000</td>
+         <td>₹100</td>
+         <td>₹5,00,000</td>
+         <td>0%</td>
+        </tr>
+        <tr>
+         <td><strong>Year 1</strong></td>
+         <td>Stabilization</td>
+         <td>₹80,00,000</td>
+         <td>₹160</td>
+         <td>₹8,00,000</td>
+         <td>60%</td>
+        </tr>
+        <tr>
+         <td><strong>Year 2</strong></td>
+         <td>Expansion Phase</td>
+         <td>₹1,50,00,000</td>
+         <td>₹300</td>
+         <td>₹15,00,000</td>
+         <td>200%</td>
+        </tr>
+        <tr>
+         <td><strong>Year 3</strong></td>
+         <td>Strong Growth</td>
+         <td>₹3,00,00,000</td>
+         <td>₹600</td>
+         <td>₹30,00,000</td>
+         <td>500%</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Year 5</strong></td>
+         <td>High Growth Stage</td>
+         <td>₹5,00,00,000</td>
+         <td>₹1,000</td>
+         <td>₹50,00,000</td>
+         <td><strong>900%</strong></td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 7. Investor Journey Highlight -->
+     <div class="card full">
+      <h3>🎯 Your Investment Grows</h3>
+      <div class="investor-journey">
+       <div class="journey-stat">
+        <div class="label">
+         INITIAL INVESTMENT
+        </div>
+        <div class="value">
+         ₹5,00,000
+        </div>
+       </div><span style="font-size: 2rem; color: var(--accent2); font-weight: bold;">→</span>
+       <div class="journey-stat">
+        <div class="label">
+         POSSIBLE VALUE (5 YEARS)
+        </div>
+        <div class="value">
+         ₹50,00,000
+        </div>
+       </div>
+       <div style="margin-top: 1.5rem; font-size: 1.1rem; color: var(--accent3); font-weight: 700;">
+        <i data-lucide="trending-up" style="display: inline; width: 24px; height: 24px;"></i> 10× Growth Multiple
+       </div>
+       <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: var(--muted);">Illustrative example based on growth trajectory. Actual results depend on business performance and market conditions.</p>
+      </div>
+     </div><!-- 8. Minority Rights vs Control -->
+     <div class="card full">
+      <h3>⚖️ Investor Rights vs Operational Control</h3>
+      <div class="comparison-grid">
+       <div>
+        <h4>✅ What Investors CAN Do</h4>
+        <ul>
+         <li><span class="can">Receive financial statements</span></li>
+         <li><span class="can">Earn declared dividends</span></li>
+         <li><span class="can">Participate in exit decisions</span></li>
+         <li><span class="can">Receive fraud/misuse protection</span></li>
+         <li><span class="can">Vote on major transactions</span></li>
+        </ul>
+       </div>
+       <div>
+        <h4>❌ What Investors CANNOT Do</h4>
+        <ul>
+         <li><span class="cannot">Manage daily operations</span></li>
+         <li><span class="cannot">Hire or remove staff</span></li>
+         <li><span class="cannot">Control business strategy</span></li>
+         <li><span class="cannot">Direct capital allocation</span></li>
+         <li><span class="cannot">Run the business</span></li>
+        </ul>
+       </div>
+      </div>
+      <div class="highlight-box">
+       <strong>Key Point:</strong> Investors are passive equity holders. Founders maintain full operational control and strategic decision-making authority. This ensures stable, focused business management.
+      </div>
+     </div><!-- 9. Return Methods -->
+     <div class="card">
+      <h3>💰 How Investors Earn Returns</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Return Method</th>
+         <th>How It Works</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Share Appreciation</strong></td>
+         <td>Company grows → Share price increases → Investor wealth grows</td>
+        </tr>
+        <tr>
+         <td><strong>Dividend Distribution</strong></td>
+         <td>Company declares profits → Distributed to shareholders proportionally</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Exit Opportunities</strong></td>
+         <td>Founder buyback, strategic acquisition, or IPO after lock-in</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 10. Exit Options -->
+     <div class="card">
+      <h3>🚪 Exit Options</h3>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Share Buyback</strong></td>
+         <td>Founder or company repurchases shares at increased valuation</td>
+        </tr>
+        <tr>
+         <td><strong>Secondary Sale</strong></td>
+         <td>Sell shares to new investor after lock-in period</td>
+        </tr>
+        <tr>
+         <td><strong>Strategic Acquisition</strong></td>
+         <td>Company acquired; shareholders receive exit proceeds</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>IPO (Long-term)</strong></td>
+         <td>Company goes public; shares become tradeable</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 11. Founder Protections -->
+     <div class="card">
+      <h3>🔐 Founder Protection Policies</h3>
+      <div class="highlight-box">
+       Founders retain majority control while ensuring investor confidence and alignment:
+      </div>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Majority Ownership</strong></td>
+         <td>Founders keep 80%+ to maintain control</td>
+        </tr>
+        <tr>
+         <td><strong>Board Leadership</strong></td>
+         <td>Founders lead board decisions; investors may have advisory seat</td>
+        </tr>
+        <tr>
+         <td><strong>Lock-in Periods</strong></td>
+         <td>Investors cannot exit before agreed timeline (typically 3-5 years)</td>
+        </tr>
+        <tr>
+         <td><strong>ROFR Clause</strong></td>
+         <td>Founders get first right to buy shares before outside sale</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Regular Reporting</strong></td>
+         <td>Quarterly financials &amp; annual reviews maintain transparency</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 12. Comparison with Fixed Return -->
+     <div class="card full">
+      <h3>📊 Why This Model Beats Fixed Return Plans</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Factor</th>
+         <th>Growth Investment Model (This)</th>
+         <th>Fixed Monthly Return</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Return Type</strong></td>
+         <td>Value appreciation + optional dividends</td>
+         <td>Fixed % monthly payment</td>
+        </tr>
+        <tr>
+         <td><strong>Upside Potential</strong></td>
+         <td>Unlimited (100%+ possible in 5 years)</td>
+         <td>Capped (fixed annual % × years)</td>
+        </tr>
+        <tr>
+         <td><strong>Business Benefit</strong></td>
+         <td>No cash drain on operations</td>
+         <td>Ongoing payment obligation</td>
+        </tr>
+        <tr>
+         <td><strong>Investor Participation</strong></td>
+         <td>Benefit from business success</td>
+         <td>Receive fixed amount regardless</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Best For</strong></td>
+         <td>Growth-focused investors seeking high returns</td>
+         <td>Conservative investors wanting certainty</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 13. Key Terminology -->
+     <div class="card">
+      <h3>📚 Key Terminology</h3>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Share</strong></td>
+         <td>Unit of ownership in Alyona Group Holdings</td>
+        </tr>
+        <tr>
+         <td><strong>Valuation</strong></td>
+         <td>Estimated total worth of the company</td>
+        </tr>
+        <tr>
+         <td><strong>Dividend</strong></td>
+         <td>Profit share distributed to shareholders (optional)</td>
+        </tr>
+        <tr>
+         <td><strong>Lock-in Period</strong></td>
+         <td>Minimum time investors must hold shares (typically 3-5 years)</td>
+        </tr>
+        <tr>
+         <td><strong>ROFR</strong></td>
+         <td>Right of First Refusal — Founders can buy shares before outside sale</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Buyback</strong></td>
+         <td>Company or founder repurchases investor shares at higher valuation</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 14. Risk Management -->
+     <div class="card">
+      <h3>⚠️ Risk Analysis &amp; Mitigation</h3>
+      <table>
+       <thead>
+        <tr>
+         <th>Risk</th>
+         <th>Mitigation Strategy</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td><strong>Business Downturn</strong></td>
+         <td>Diversified business portfolio across 5 entities</td>
+        </tr>
+        <tr>
+         <td><strong>Capital Misallocation</strong></td>
+         <td>Regular financial reporting &amp; quarterly reviews</td>
+        </tr>
+        <tr>
+         <td><strong>Liquidity Constraints</strong></td>
+         <td>Clear exit timeline &amp; predefined buyback options</td>
+        </tr>
+        <tr>
+         <td><strong>Founder Disagreement</strong></td>
+         <td>Clear governance structure &amp; decision-making authority</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>Market/External Risks</strong></td>
+         <td>Growth-focused model reduces fixed debt obligations</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 15. Investment Process -->
+     <div class="card full">
+      <h3>🔄 Investor Entry Process</h3>
+      <table>
+       <thead>
+        <tr>
+         <th style="text-align: center; width: 60px;">Step</th>
+         <th>Stage</th>
+         <th>Activity</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">1</td>
+         <td><strong>Initial Screening</strong></td>
+         <td>Confirm investor interest, capacity, and alignment</td>
+        </tr>
+        <tr>
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">2</td>
+         <td><strong>Due Diligence</strong></td>
+         <td>Review business financials, operations, and growth plans</td>
+        </tr>
+        <tr>
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">3</td>
+         <td><strong>Term Sheet</strong></td>
+         <td>Agree on valuation, share allocation, investor terms</td>
+        </tr>
+        <tr>
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">4</td>
+         <td><strong>Documentation</strong></td>
+         <td>Prepare Shareholder Agreement, cap table, legal structure</td>
+        </tr>
+        <tr>
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">5</td>
+         <td><strong>Fund Transfer</strong></td>
+         <td>Investor transfers capital; receives share certificate</td>
+        </tr>
+        <tr class="highlight">
+         <td style="text-align: center; font-weight: 700; color: var(--accent1);">6</td>
+         <td><strong>Post-Investment</strong></td>
+         <td>Ongoing reporting, quarterly updates, relationship management</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- 16. FAQs -->
+     <div class="card full">
+      <h3>❓ Frequently Asked Questions</h3>
+      <div class="faq-item">
+       <strong>Q: Who manages the capital after investment?</strong>
+       <p>Founders manage capital allocation per the strategic plan. Investors receive quarterly financial summaries and annual detailed reviews.</p>
+      </div>
+      <div class="faq-item">
+       <strong>Q: Can I exit early if needed?</strong>
+       <p>Not before the lock-in period. After that, you can negotiate a secondary sale with founders or find replacement investors. No forced exit mechanism.</p>
+      </div>
+      <div class="faq-item">
+       <strong>Q: What if the company loses value?</strong>
+       <p>Share values decrease proportionally. This is equity investment risk. Mitigation: diversified business portfolio, founder expertise, regular reporting, and governance structure.</p>
+      </div>
+      <div class="faq-item">
+       <strong>Q: When do I receive returns?</strong>
+       <p>Three ways: (1) Optional dividends (founder-decided), (2) Share appreciation (realized on exit), (3) Exit event (buyback/acquisition/IPO typically in 3-5+ years).</p>
+      </div>
+      <div class="faq-item">
+       <strong>Q: What about tax implications?</strong>
+       <p>Consult a tax advisor. Capital gains, dividend income, and exit proceeds have tax implications based on your jurisdiction and investment type.</p>
+      </div>
+     </div><!-- 17. Capital Use -->
+     <div class="card">
+      <h3>💼 Use of Invested Capital</h3>
+      <table>
+       <tbody>
+        <tr>
+         <td><strong>Business Expansion</strong></td>
+         <td>40%</td>
+         <td>Scale operations, new locations, market entry</td>
+        </tr>
+        <tr>
+         <td><strong>Technology &amp; Systems</strong></td>
+         <td>25%</td>
+         <td>Software, infrastructure, automation, efficiency</td>
+        </tr>
+        <tr>
+         <td><strong>Working Capital</strong></td>
+         <td>20%</td>
+         <td>Inventory, payroll, operational needs</td>
+        </tr>
+        <tr class="highlight">
+         <td><strong>New Ventures</strong></td>
+         <td>15%</td>
+         <td>Launch new business units under holding company</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div><!-- 18. Next Steps & Requirements -->
+    <div class="card full">
+     <h3>✅ If Plan is Approved — Key Requirements &amp; Next Steps</h3>
+     <div class="highlight-box">
+      Once stakeholders approve this investment model, the following items must be addressed in sequence to move forward:
+     </div>
+     <table>
+      <thead>
+       <tr>
+        <th style="text-align: center; width: 60px;">Phase</th>
+        <th>Action Item</th>
+        <th>Details &amp; Deliverables</th>
+        <th>Owner</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">1</td>
+        <td><strong>Legal Structure Setup</strong></td>
+        <td>Register holding company (Alyona Group Holdings) with proper corporate structure; prepare Articles of Association &amp; MOA</td>
+        <td>Founders + Legal Team</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">2</td>
+        <td><strong>Cap Table Creation</strong></td>
+        <td>Finalize capitalization table with founder shares &amp; investor allocation; document share certificates &amp; serial numbers</td>
+        <td>Finance Team</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">3</td>
+        <td><strong>Shareholder Agreement</strong></td>
+        <td>Draft &amp; finalize Shareholder Agreement covering rights, lock-in period, ROFR, dividend policy, exit terms, governance</td>
+        <td>Legal Team</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">4</td>
+        <td><strong>Financial Audits</strong></td>
+        <td>Prepare audited financial statements for past 2-3 years; create 5-year financial projections &amp; growth assumptions</td>
+        <td>Finance Team + Auditor</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">5</td>
+        <td><strong>Business Plan Documentation</strong></td>
+        <td>Prepare detailed business plans for each subsidiary; include market analysis, competitive positioning, revenue models, expansion timeline</td>
+        <td>Operations + Strategy</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">6</td>
+        <td><strong>Investor Identification</strong></td>
+        <td>Create targeted investor list (HNIs, family offices, angel investors); define target ticket size &amp; investor profile</td>
+        <td>Founder / Business Dev</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">7</td>
+        <td><strong>Due Diligence Package</strong></td>
+        <td>Prepare data room with company docs, contracts, IP rights, compliance certificates, insurance policies, tax filings</td>
+        <td>Compliance + Legal</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">8</td>
+        <td><strong>Pitch Deck Creation</strong></td>
+        <td>Build investor pitch deck covering: vision, market opportunity, business model, traction, financial projections, use of capital</td>
+        <td>Marketing / Strategy</td>
+       </tr>
+       <tr>
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">9</td>
+        <td><strong>Governance Framework</strong></td>
+        <td>Define Board structure, meeting cadence (quarterly minimum), investor reporting format, decision-making authority matrix</td>
+        <td>Founder + Legal</td>
+       </tr>
+       <tr class="highlight">
+        <td style="text-align: center; font-weight: 700; color: var(--accent1);">10</td>
+        <td><strong>Tax &amp; Compliance Setup</strong></td>
+        <td>Consult tax advisor for ESOP, dividend, capital gains implications; ensure regulatory compliance for holding company structure</td>
+        <td>Finance + Tax Advisor</td>
+       </tr>
+      </tbody>
+     </table>
+    </div><!-- 19. Discussion Points for Next Meeting -->
+    <div class="card full">
+     <h3>🗣️ Key Discussion Points for Stakeholder Meetings</h3>
+     <div class="comparison-grid">
+      <div>
+       <h4>Strategic Decisions Needed</h4>
+       <ul>
+        <li><span class="can"><strong>Investor Ticket Size:</strong> Minimum investment amount</span></li>
+        <li><span class="can"><strong>Target Raise:</strong> Total capital to be raised</span></li>
+        <li><span class="can"><strong>Lock-in Period:</strong> Duration (3, 5, or 7 years)</span></li>
+        <li><span class="can"><strong>Dividend Policy:</strong> When &amp; how dividends distributed</span></li>
+        <li><span class="can"><strong>Board Composition:</strong> Investor seat on board?</span></li>
+       </ul>
+      </div>
+      <div>
+       <h4>Operational Setup Items</h4>
+       <ul>
+        <li><span class="can"><strong>Reporting Schedule:</strong> Quarterly, semi-annual, or annual?</span></li>
+        <li><span class="can"><strong>Exit Timeline:</strong> Year 5, 7, or 10 target exit?</span></li>
+        <li><span class="can"><strong>ROFR Terms:</strong> When can investors sell shares?</span></li>
+        <li><span class="can"><strong>Buyback Triggers:</strong> At what valuation multiple?</span></li>
+        <li><span class="can"><strong>Fundraising Timeline:</strong> When to launch investor outreach?</span></li>
+       </ul>
+      </div>
+     </div>
+    </div><!-- 20. Risks to Address -->
+    <div class="card">
+     <h3>⚡ Critical Risks to Address Before Launch</h3>
+     <table>
+      <tbody>
+       <tr>
+        <td><strong>Regulatory Compliance</strong></td>
+        <td>Ensure holding company structure complies with Indian corporate law &amp; securities regulations</td>
+       </tr>
+       <tr>
+        <td><strong>Founder Alignment</strong></td>
+        <td>All founders must agree on control terms, capital allocation, &amp; exit strategy</td>
+       </tr>
+       <tr>
+        <td><strong>Financial Credibility</strong></td>
+        <td>Clean audited financials crucial; ensure no hidden liabilities or contingent commitments</td>
+       </tr>
+       <tr>
+        <td><strong>IP &amp; Contracts</strong></td>
+        <td>All company IP, trademarks, &amp; key vendor contracts must be properly held by holding company</td>
+       </tr>
+       <tr class="highlight">
+        <td><strong>Investor Due Diligence</strong></td>
+        <td>Prepare for external auditors, tax advisors, &amp; legal review of all documents</td>
+       </tr>
+      </tbody>
+     </table>
+    </div><!-- 21. Success Metrics -->
+    <div class="card">
+     <h3>📊 Success Metrics to Track</h3>
+     <table>
+      <tbody>
+       <tr>
+        <td><strong>Fundraising Goal</strong></td>
+        <td id="fundraise-metric">Amount raised vs. target</td>
+       </tr>
+       <tr>
+        <td><strong>Investor Satisfaction</strong></td>
+        <td>NPS score, timely reporting, issue resolution rate</td>
+       </tr>
+       <tr>
+        <td><strong>Company Growth</strong></td>
+        <td>Revenue growth, new business units launched, market share gains</td>
+       </tr>
+       <tr>
+        <td><strong>Portfolio Health</strong></td>
+        <td>All 5 subsidiaries performing on target, no underperformers</td>
+       </tr>
+       <tr class="highlight">
+        <td><strong>Exit Preparation</strong></td>
+        <td>Company valuation growing 20-30% annually (target for 10× in 5 years)</td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div><!-- Footer -->
+   <div class="footer" style="margin-top: 3rem;">
+    <p style="margin: 0;">Internal Discussion Document · <span id="company-name-footer">Alyona Group</span> Investment Model A1 · Model Version 1.0</p>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem;">Confidential — Not for External Distribution</p>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      company_name: "Alyona Group Holdings",
+      founder_pct: "80"
+    };
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat('en-IN').format(Math.round(num));
+    }
+
+    // Initialize with default values
+    function updateDisplay() {
+      const founderPct = parseFloat(defaultConfig.founder_pct) || 80;
+      const investorPct = 100 - founderPct;
+      const valuation = 5000000;
+      const totalShares = 50000;
+      const sharePrice = valuation / totalShares;
+      const founderShares = (founderPct / 100) * totalShares;
+      const founderValue = founderShares * sharePrice;
+      const investorShares = (investorPct / 100) * totalShares;
+      const investorValue = investorShares * sharePrice;
+
+      document.getElementById('founder-pct-display').textContent = founderPct.toFixed(0) + '% (Control)';
+      document.getElementById('investor-pct-display').textContent = investorPct.toFixed(1) + '% (Passive)';
+      document.getElementById('ex-founder-shares').textContent = formatNumber(founderShares);
+      document.getElementById('ex-investor-shares').textContent = formatNumber(investorShares);
+      document.getElementById('ex-total-shares').textContent = formatNumber(totalShares);
+      document.getElementById('ex-founder-value').textContent = '₹' + formatNumber(founderValue);
+      document.getElementById('ex-investor-value').textContent = '₹' + formatNumber(investorValue);
+      document.getElementById('ex-total-value').textContent = '₹' + formatNumber(valuation);
+      document.getElementById('ex-share-price').textContent = formatNumber(sharePrice);
+    }
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => {
+        const companyName = config.company_name || defaultConfig.company_name;
+        const founderPct = config.founder_pct || defaultConfig.founder_pct;
+        
+        defaultConfig.company_name = companyName;
+        defaultConfig.founder_pct = founderPct;
+        
+        document.getElementById('company-name-header').textContent = companyName;
+        document.getElementById('company-name-footer').textContent = companyName;
+        
+        updateDisplay();
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['company_name', config.company_name || defaultConfig.company_name],
+        ['founder_pct', String(config.founder_pct || defaultConfig.founder_pct)]
+      ])
+    });
+
+    // Initial display
+    updateDisplay();
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dcba79515e73bec',t:'MTc3MzU3OTEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html><!-- Hero -->
