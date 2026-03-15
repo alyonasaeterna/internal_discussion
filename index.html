@@ -3,44 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Internal Discussions</title>
+  <title>Alyona's Group of Companies - Internal Discussions</title>
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel-strong: rgba(255, 255, 255, 0.12);
-      --text: #edf2ff;
-      --muted: #b8c1d9;
-      --line: rgba(255, 255, 255, 0.12);
-      --accent: #7c9cff;
-      --accent-2: #62e0c1;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
-      --radius: 20px;
-      --max: 1200px;
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: #1e293b;
+      --card-2: #243247;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #60a5fa;
+      --accent-2: #38bdf8;
+      --success: #22c55e;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+      --radius: 18px;
+      --max: 1180px;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 30%),
-        radial-gradient(circle at top right, rgba(98, 224, 193, 0.12), transparent 28%),
-        linear-gradient(180deg, #0a1020 0%, #10182c 55%, #0c1325 100%);
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(96, 165, 250, 0.14), transparent 30%),
+        linear-gradient(180deg, #0b1220 0%, #0f172a 45%, #111827 100%);
+      color: var(--text);
       min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
     }
 
     .container {
@@ -48,628 +41,338 @@
       margin: 0 auto;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(8, 12, 25, 0.7);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-badge {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #08111f;
-      font-weight: 800;
-      box-shadow: var(--shadow);
-      flex-shrink: 0;
-    }
-
-    .brand-text {
-      min-width: 0;
-    }
-
-    .brand-text h1 {
-      margin: 0;
-      font-size: 1rem;
-      line-height: 1.1;
-      letter-spacing: 0.2px;
-    }
-
-    .brand-text p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav a {
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-      font-size: 0.92rem;
-    }
-
-    .nav a:hover {
-      color: var(--text);
-      border-color: rgba(124, 156, 255, 0.45);
-      background: rgba(124, 156, 255, 0.08);
-    }
-
     .hero {
-      padding: 72px 0 30px;
+      padding: 52px 0 28px;
+      text-align: center;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .hero-card,
-    .summary-card,
-    .section-card,
-    .topic-card,
-    .quick-card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 34px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      inset: auto -80px -80px auto;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(124, 156, 255, 0.2), transparent 60%);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(124, 156, 255, 0.12);
-      border: 1px solid rgba(124, 156, 255, 0.2);
-      color: #dbe5ff;
-      font-size: 0.84rem;
-      margin-bottom: 18px;
-    }
-
-    .hero h2 {
-      margin: 0 0 14px;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1.04;
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.08;
       letter-spacing: -0.03em;
     }
 
-    .hero p.lead {
-      margin: 0;
-      max-width: 760px;
+    .hero h2 {
+      margin: 14px 0 0;
+      font-size: 1.15rem;
       color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.75;
+      font-weight: 500;
     }
 
-    .hero-actions {
-      margin-top: 26px;
+    .companies-section {
+      padding: 10px 0 48px;
+    }
+
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .company-card {
+      grid-column: span 6;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      transition: 0.22s ease;
+    }
+
+    .company-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(96, 165, 250, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .company-header {
       display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .company-name {
+      margin: 0;
+      font-size: 1.32rem;
+      letter-spacing: -0.02em;
+    }
+
+    .topic-count {
+      white-space: nowrap;
+      font-size: 0.84rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.22);
+      color: #dcfce7;
+    }
+
+    .company-desc {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      min-height: 76px;
+    }
+
+    .company-actions {
+      display: flex;
+      align-items: center;
       gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 13px 18px;
-      border-radius: 14px;
-      font-weight: 650;
+      border: 0;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
       transition: 0.2s ease;
-      border: 1px solid transparent;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #8bb2ff);
-      color: #09111f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08111f;
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      filter: brightness(1.04);
+      filter: brightness(1.05);
     }
 
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      border-color: var(--line);
+    .topics-wrap {
+      margin-top: 18px;
+      display: none;
     }
 
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(124, 156, 255, 0.28);
+    .topics-wrap.open {
+      display: block;
     }
 
-    .summary-card {
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .summary-title {
-      margin: 0;
-      font-size: 1rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .metric {
-      padding: 16px 18px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--line);
+    .topics-panel {
+      margin-top: 6px;
+      padding: 16px;
       border-radius: 16px;
-    }
-
-    .metric .label {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-    }
-
-    .metric .value {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .section {
-      padding: 18px 0 10px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .section-header h3 {
-      margin: 0;
-      font-size: 1.4rem;
-      letter-spacing: -0.02em;
-    }
-
-    .section-header p {
-      margin: 6px 0 0;
-      color: var(--muted);
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--line);
     }
 
     .topics-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
 
     .topic-card {
-      grid-column: span 6;
-      padding: 22px;
-      transition: 0.22s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .topic-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(124, 156, 255, 0.28);
-      background: var(--panel-strong);
-    }
-
-    .topic-top {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .topic-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 1.2rem;
-      background: rgba(124, 156, 255, 0.12);
-      border: 1px solid rgba(124, 156, 255, 0.18);
-      flex-shrink: 0;
-    }
-
-    .status {
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      color: #d7fff5;
-      background: rgba(98, 224, 193, 0.12);
-      border: 1px solid rgba(98, 224, 193, 0.18);
-      white-space: nowrap;
-    }
-
-    .topic-card h4 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      letter-spacing: -0.02em;
-    }
-
-    .topic-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      min-height: 82px;
-    }
-
-    .topic-meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-
-    .chip {
-      padding: 8px 11px;
-      border-radius: 999px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.82rem;
+      border-radius: 14px;
+      padding: 16px;
     }
 
-    .topic-actions {
-      margin-top: 18px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .topic-title {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
     }
 
-    .topic-link {
-      padding: 11px 14px;
-      border-radius: 12px;
-      background: rgba(124, 156, 255, 0.11);
-      border: 1px solid rgba(124, 156, 255, 0.22);
-      color: #e9efff;
-      font-weight: 600;
-    }
-
-    .topic-link:hover {
-      background: rgba(124, 156, 255, 0.16);
-    }
-
-    .topic-path {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.82rem;
-      color: #9fb0d8;
-      word-break: break-word;
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 8px;
-    }
-
-    .quick-card {
-      padding: 20px;
-    }
-
-    .quick-card h4 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .quick-card p {
-      margin: 0;
+    .topic-desc {
+      margin: 0 0 14px;
       color: var(--muted);
       line-height: 1.65;
     }
 
-    .footer {
-      padding: 34px 0 42px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .footer-inner {
-      border-top: 1px solid var(--line);
-      padding-top: 20px;
+    .topic-actions {
       display: flex;
-      justify-content: space-between;
-      gap: 16px;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    @media (max-width: 980px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
 
-      .topic-card {
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .empty-state {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer {
+      padding: 14px 0 32px;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 920px) {
+      .company-card {
         grid-column: span 12;
-      }
-
-      .quick-grid {
-        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 720px) {
-      .topbar-inner {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .nav {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
+    @media (max-width: 640px) {
       .hero {
-        padding-top: 40px;
+        padding-top: 34px;
       }
 
-      .hero-card,
-      .summary-card,
-      .topic-card,
-      .quick-card {
+      .company-card {
         padding: 18px;
       }
 
-      .hero p.lead {
-        font-size: 0.98rem;
+      .company-header {
+        flex-direction: column;
+        align-items: start;
       }
 
-      .section-header {
-        align-items: start;
-        flex-direction: column;
+      .company-desc {
+        min-height: auto;
       }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-badge">ID</div>
-        <div class="brand-text">
-          <h1>Internal Discussions</h1>
-          <p>A structured hub for topic-wise analysis and planning</p>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="#topics">Topics</a>
-        <a href="#quick-notes">Notes</a>
-      </nav>
+  <header class="hero">
+    <div class="container">
+      <h1>Alyona's Group of Companies</h1>
+      <h2>Internal Discussions</h2>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-card">
-          <div class="eyebrow">Strategic Knowledge Base</div>
-          <h2>Internal discussion hub for group planning, analysis, and decision-making.</h2>
-          <p class="lead">
-            This page acts as the central navigation point for topic-wise internal discussion pages.
-            Each discussion can have its own structured analysis, pre-analysis, model notes, and future strategy references.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#topics">Open Discussions</a>
-            <a class="btn btn-secondary" href="alyonas_holdings/pre-analysis.html">Go to Holdings Analysis</a>
-          </div>
-        </div>
-
-        <aside class="summary-card">
-          <h3 class="summary-title">Workspace Snapshot</h3>
-
-          <div class="metric">
-            <div class="label">Repository Purpose</div>
-            <div class="value">Internal Strategy</div>
-          </div>
-
-          <div class="metric">
-            <div class="label">Current Topic Style</div>
-            <div class="value">Pre-Analysis Pages</div>
-          </div>
-
-          <div class="metric">
-            <div class="label">Suggested Structure</div>
-            <div class="value">Topic-wise folders</div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section" id="topics">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h3>Discussion Topics</h3>
-            <p>Open each topic directly through its dedicated discussion page.</p>
-          </div>
-        </div>
-
-        <div class="topics-grid">
-          <article class="topic-card">
-            <div class="topic-top">
-              <div class="topic-icon">🏛️</div>
-              <div class="status">Active</div>
-            </div>
-
-            <h4>Alyona’s Holdings</h4>
-            <p>
-              Group structure, investment models, holding company concepts, capital planning,
-              ownership logic, valuation thinking, and pre-analysis documents.
-            </p>
-
-            <div class="topic-meta">
-              <span class="chip">Investment</span>
-              <span class="chip">Holdings</span>
-              <span class="chip">Pre-Analysis</span>
-            </div>
-
-            <div class="topic-actions">
-              <a class="topic-link" href="alyonas_holdings/pre-analysis.html">Open Discussion</a>
-            </div>
-
-            <div class="topic-actions">
-              <div class="topic-path">Path: /alyonas_holdings/pre-analysis.html</div>
-            </div>
-          </article>
-
-          <article class="topic-card">
-            <div class="topic-top">
-              <div class="topic-icon">🌿</div>
-              <div class="status">Planned</div>
-            </div>
-
-            <h4>Alyona’s Ayurveda</h4>
-            <p>
-              Pre-analysis section for Ayurveda-related concepts, early research notes,
-              feasibility thoughts, product direction, and internal idea structuring.
-            </p>
-
-            <div class="topic-meta">
-              <span class="chip">Ayurveda</span>
-              <span class="chip">Research</span>
-              <span class="chip">Pre-Analysis</span>
-            </div>
-
-            <div class="topic-actions">
-              <a class="topic-link" href="alyonas_anurveda/pre-analysis.html">Open Discussion</a>
-            </div>
-
-            <div class="topic-actions">
-              <div class="topic-path">Path: /alyonas_anurveda/pre-analysis.html</div>
-            </div>
-          </article>
-
-          <article class="topic-card">
-            <div class="topic-top">
-              <div class="topic-icon">➕</div>
-              <div class="status">Future</div>
-            </div>
-
-            <h4>Add More Topics</h4>
-            <p>
-              You can keep extending this structure with more folders such as solvics_growth,
-              reventra_model, software_ideas, or other internal research pages.
-            </p>
-
-            <div class="topic-meta">
-              <span class="chip">Scalable</span>
-              <span class="chip">Topic-wise</span>
-              <span class="chip">Future Ready</span>
-            </div>
-
-            <div class="topic-actions">
-              <a class="topic-link" href="#">Coming Soon</a>
-            </div>
-
-            <div class="topic-actions">
-              <div class="topic-path">Pattern: /topic-name/pre-analysis.html</div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="quick-notes">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h3>Quick Notes</h3>
-            <p>Simple operating rules for keeping this repository clean and expandable.</p>
-          </div>
-        </div>
-
-        <div class="quick-grid">
-          <div class="quick-card">
-            <h4>Folder Pattern</h4>
-            <p>
-              Keep each topic inside its own folder and use a consistent page name such as
-              <strong>pre-analysis.html</strong> for easier linking and expansion later.
-            </p>
-          </div>
-
-          <div class="quick-card">
-            <h4>Future Main Dashboard</h4>
-            <p>
-              This page can later evolve into a full dashboard with categories, filters,
-              company-wise sections, and updated discussion status blocks.
-            </p>
-          </div>
-
-          <div class="quick-card">
-            <h4>Best Naming Style</h4>
-            <p>
-              Use lowercase folder names with underscores or hyphens only. Avoid spaces so the
-              URLs stay clean and predictable.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+  <main class="companies-section">
+    <div class="container">
+      <div id="companiesGrid" class="companies-grid"></div>
+    </div>
   </main>
 
   <footer class="footer">
-    <div class="container footer-inner">
-      <div>Internal Discussions Repository</div>
-      <div>Built for structured internal planning and analysis</div>
-    </div>
+    Internal discussions dashboard
   </footer>
+
+  <script>
+    const companies = [
+      {
+        id: "armoire",
+        name: "Alyona's Armoire",
+        description: "Kidswear retail business focused on product sales, customer growth, store-level expansion, and brand-building opportunities.",
+        topics: [
+          // Example topic format:
+          // {
+          //   title: "Pre-analysis",
+          //   description: "Initial business and growth discussion for Alyona's Armoire.",
+          //   file: "alyonas_armoire/pre-analysis.html"
+          // }
+        ]
+      },
+      {
+        id: "solvics",
+        name: "Alyona's Solvics",
+        description: "Freight intelligence and remote service business focused on supply chain support, operations, and scalable service models.",
+        topics: [
+          // Add topic files here later
+        ]
+      },
+      {
+        id: "reventra",
+        name: "Alyona's Reventra",
+        description: "Trading and forwarding business concept focused on commercial execution, logistics support, and future market expansion.",
+        topics: [
+          // Add topic files here later
+        ]
+      },
+      {
+        id: "setu",
+        name: "Alyona's Setu",
+        description: "Future freight forwarding and trading idea intended for international expansion, especially US-facing business opportunities.",
+        topics: [
+          // Add topic files here later
+        ]
+      },
+      {
+        id: "aeterna",
+        name: "Alyona's Aeterna",
+        description: "Future software development business intended to build digital systems, tools, and scalable technology solutions.",
+        topics: [
+          {
+            title: "Pre-analysis",
+            description: "Initial discussion and evaluation page for the holdings and investment model structure.",
+            file: "alyonas_holdings/pre-analysis.html"
+          }
+        ]
+      }
+    ];
+
+    const companiesGrid = document.getElementById("companiesGrid");
+
+    function createTopicHTML(topics) {
+      if (!topics || topics.length === 0) {
+        return `
+          <div class="topics-panel">
+            <div class="empty-state">No topics added for this company yet.</div>
+          </div>
+        `;
+      }
+
+      const topicCards = topics.map(topic => `
+        <div class="topic-card">
+          <h4 class="topic-title">${topic.title}</h4>
+          <p class="topic-desc">${topic.description}</p>
+          <div class="topic-actions">
+            <a class="btn btn-secondary" href="${topic.file}">Open Discussion</a>
+          </div>
+        </div>
+      `).join("");
+
+      return `
+        <div class="topics-panel">
+          <div class="topics-grid">
+            ${topicCards}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCompanies() {
+      companiesGrid.innerHTML = companies.map((company, index) => `
+        <article class="company-card">
+          <div class="company-header">
+            <h3 class="company-name">${company.name}</h3>
+            <div class="topic-count">${company.topics.length} Topic${company.topics.length === 1 ? "" : "s"}</div>
+          </div>
+
+          <p class="company-desc">${company.description}</p>
+
+          <div class="company-actions">
+            <button class="btn btn-primary" onclick="toggleTopics('topics-${index}')">Open Topics</button>
+          </div>
+
+          <div id="topics-${index}" class="topics-wrap">
+            ${createTopicHTML(company.topics)}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function toggleTopics(id) {
+      const selected = document.getElementById(id);
+      selected.classList.toggle("open");
+    }
+
+    renderCompanies();
+  </script>
 </body>
 </html>
