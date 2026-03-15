@@ -1,14 +1,675 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Alyona's Group Of Companies</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internal Discussions</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-strong: rgba(255, 255, 255, 0.12);
+      --text: #edf2ff;
+      --muted: #b8c1d9;
+      --line: rgba(255, 255, 255, 0.12);
+      --accent: #7c9cff;
+      --accent-2: #62e0c1;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      --radius: 20px;
+      --max: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(98, 224, 193, 0.12), transparent 28%),
+        linear-gradient(180deg, #0a1020 0%, #10182c 55%, #0c1325 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(8, 12, 25, 0.7);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08111f;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-text p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+      font-size: 0.92rem;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      border-color: rgba(124, 156, 255, 0.45);
+      background: rgba(124, 156, 255, 0.08);
+    }
+
+    .hero {
+      padding: 72px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .summary-card,
+    .section-card,
+    .topic-card,
+    .quick-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(124, 156, 255, 0.2), transparent 60%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(124, 156, 255, 0.12);
+      border: 1px solid rgba(124, 156, 255, 0.2);
+      color: #dbe5ff;
+      font-size: 0.84rem;
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 650;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #8bb2ff);
+      color: #09111f;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(124, 156, 255, 0.28);
+    }
+
+    .summary-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .summary-title {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .metric {
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .metric .value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section {
+      padding: 18px 0 10px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .topic-card {
+      grid-column: span 6;
+      padding: 22px;
+      transition: 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 156, 255, 0.28);
+      background: var(--panel-strong);
+    }
+
+    .topic-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .topic-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      background: rgba(124, 156, 255, 0.12);
+      border: 1px solid rgba(124, 156, 255, 0.18);
+      flex-shrink: 0;
+    }
+
+    .status {
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: #d7fff5;
+      background: rgba(98, 224, 193, 0.12);
+      border: 1px solid rgba(98, 224, 193, 0.18);
+      white-space: nowrap;
+    }
+
+    .topic-card h4 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .topic-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      min-height: 82px;
+    }
+
+    .topic-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .topic-actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topic-link {
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: rgba(124, 156, 255, 0.11);
+      border: 1px solid rgba(124, 156, 255, 0.22);
+      color: #e9efff;
+      font-weight: 600;
+    }
+
+    .topic-link:hover {
+      background: rgba(124, 156, 255, 0.16);
+    }
+
+    .topic-path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      color: #9fb0d8;
+      word-break: break-word;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .quick-card {
+      padding: 20px;
+    }
+
+    .quick-card h4 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .quick-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .footer {
+      padding: 34px 0 42px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-card {
+        grid-column: span 12;
+      }
+
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .hero-card,
+      .summary-card,
+      .topic-card,
+      .quick-card {
+        padding: 18px;
+      }
+
+      .hero p.lead {
+        font-size: 0.98rem;
+      }
+
+      .section-header {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Internal Discussions</h1>
-    <ul>
-      <li><a href="alyonas_holdings/pre-analysis.html">Alyona's Holdings – Pre Analysis</a></li>
-      <li><a href="alyonas_anurveda/pre-analysis.html">Alyona's Ayurveda – Pre Analysis</a></li>
-    </ul>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">ID</div>
+        <div class="brand-text">
+          <h1>Internal Discussions</h1>
+          <p>A structured hub for topic-wise analysis and planning</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#topics">Topics</a>
+        <a href="#quick-notes">Notes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Strategic Knowledge Base</div>
+          <h2>Internal discussion hub for group planning, analysis, and decision-making.</h2>
+          <p class="lead">
+            This page acts as the central navigation point for topic-wise internal discussion pages.
+            Each discussion can have its own structured analysis, pre-analysis, model notes, and future strategy references.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#topics">Open Discussions</a>
+            <a class="btn btn-secondary" href="alyonas_holdings/pre-analysis.html">Go to Holdings Analysis</a>
+          </div>
+        </div>
+
+        <aside class="summary-card">
+          <h3 class="summary-title">Workspace Snapshot</h3>
+
+          <div class="metric">
+            <div class="label">Repository Purpose</div>
+            <div class="value">Internal Strategy</div>
+          </div>
+
+          <div class="metric">
+            <div class="label">Current Topic Style</div>
+            <div class="value">Pre-Analysis Pages</div>
+          </div>
+
+          <div class="metric">
+            <div class="label">Suggested Structure</div>
+            <div class="value">Topic-wise folders</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="topics">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h3>Discussion Topics</h3>
+            <p>Open each topic directly through its dedicated discussion page.</p>
+          </div>
+        </div>
+
+        <div class="topics-grid">
+          <article class="topic-card">
+            <div class="topic-top">
+              <div class="topic-icon">🏛️</div>
+              <div class="status">Active</div>
+            </div>
+
+            <h4>Alyona’s Holdings</h4>
+            <p>
+              Group structure, investment models, holding company concepts, capital planning,
+              ownership logic, valuation thinking, and pre-analysis documents.
+            </p>
+
+            <div class="topic-meta">
+              <span class="chip">Investment</span>
+              <span class="chip">Holdings</span>
+              <span class="chip">Pre-Analysis</span>
+            </div>
+
+            <div class="topic-actions">
+              <a class="topic-link" href="alyonas_holdings/pre-analysis.html">Open Discussion</a>
+            </div>
+
+            <div class="topic-actions">
+              <div class="topic-path">Path: /alyonas_holdings/pre-analysis.html</div>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div class="topic-top">
+              <div class="topic-icon">🌿</div>
+              <div class="status">Planned</div>
+            </div>
+
+            <h4>Alyona’s Ayurveda</h4>
+            <p>
+              Pre-analysis section for Ayurveda-related concepts, early research notes,
+              feasibility thoughts, product direction, and internal idea structuring.
+            </p>
+
+            <div class="topic-meta">
+              <span class="chip">Ayurveda</span>
+              <span class="chip">Research</span>
+              <span class="chip">Pre-Analysis</span>
+            </div>
+
+            <div class="topic-actions">
+              <a class="topic-link" href="alyonas_anurveda/pre-analysis.html">Open Discussion</a>
+            </div>
+
+            <div class="topic-actions">
+              <div class="topic-path">Path: /alyonas_anurveda/pre-analysis.html</div>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div class="topic-top">
+              <div class="topic-icon">➕</div>
+              <div class="status">Future</div>
+            </div>
+
+            <h4>Add More Topics</h4>
+            <p>
+              You can keep extending this structure with more folders such as solvics_growth,
+              reventra_model, software_ideas, or other internal research pages.
+            </p>
+
+            <div class="topic-meta">
+              <span class="chip">Scalable</span>
+              <span class="chip">Topic-wise</span>
+              <span class="chip">Future Ready</span>
+            </div>
+
+            <div class="topic-actions">
+              <a class="topic-link" href="#">Coming Soon</a>
+            </div>
+
+            <div class="topic-actions">
+              <div class="topic-path">Pattern: /topic-name/pre-analysis.html</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quick-notes">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h3>Quick Notes</h3>
+            <p>Simple operating rules for keeping this repository clean and expandable.</p>
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <div class="quick-card">
+            <h4>Folder Pattern</h4>
+            <p>
+              Keep each topic inside its own folder and use a consistent page name such as
+              <strong>pre-analysis.html</strong> for easier linking and expansion later.
+            </p>
+          </div>
+
+          <div class="quick-card">
+            <h4>Future Main Dashboard</h4>
+            <p>
+              This page can later evolve into a full dashboard with categories, filters,
+              company-wise sections, and updated discussion status blocks.
+            </p>
+          </div>
+
+          <div class="quick-card">
+            <h4>Best Naming Style</h4>
+            <p>
+              Use lowercase folder names with underscores or hyphens only. Avoid spaces so the
+              URLs stay clean and predictable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>Internal Discussions Repository</div>
+      <div>Built for structured internal planning and analysis</div>
+    </div>
+  </footer>
 </body>
 </html>
